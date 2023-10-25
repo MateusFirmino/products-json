@@ -1,4 +1,4 @@
-package teste.productsjson.client;
+package teste.productsjson.client.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

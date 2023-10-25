@@ -1,14 +1,16 @@
-package teste.productsjson.dto;
+package teste.productsjson.client.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductOutput {
+public class ProductsResponse {
+
   private Long id;
   private String title;
   private String description;
@@ -20,5 +22,5 @@ public class ProductOutput {
   private String category;
   private String thumbnail;
   private List<String> images;
-}
 
+}

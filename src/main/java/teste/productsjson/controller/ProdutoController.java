@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import teste.productsjson.client.DummyClient;
-import teste.productsjson.client.ProductList;
-import teste.productsjson.client.ProductUpdate;
-import teste.productsjson.client.Products;
-import teste.productsjson.client.ProductsDelete;
+import teste.productsjson.client.dto.ProductListResponse;
+import teste.productsjson.client.dto.ProductUpdate;
+import teste.productsjson.client.dto.ProductsDelete;
+import teste.productsjson.client.dto.ProductsResponse;
 
 import java.util.List;
 
@@ -26,19 +26,22 @@ public class ProdutoController {
 
   public ProdutoController(DummyClient dummyClient) {this.dummyClient = dummyClient;}
 
-  @GetMapping
-  public ProductList getAllProducts() {
-    return dummyClient.getAllProducts();
-  }
-
   @GetMapping(value = "/{id}")
-  public Products getProduct(@PathVariable Long id) {
+  public ProductsResponse getProduct(@PathVariable Long id) {
     return dummyClient.getProduct(id);
   }
 
   @GetMapping(value = "/search")
-  public ProductList searchProducts(@RequestParam(name = "q") String q) {
+  public ProductListResponse searchProducts(@RequestParam(name = "q") String q) {
     return dummyClient.searchProducts(q);
+  }
+
+  @GetMapping()
+  public ProductListResponse searchCustomProducts(
+    @RequestParam(value = "limit", required = false) String limit,
+    @RequestParam(value = "skip", required = false) String skip
+  ) {
+    return dummyClient.searchCustomProducts(limit, skip);
   }
 
   @GetMapping(value = "/categories")
@@ -47,17 +50,17 @@ public class ProdutoController {
   }
 
   @GetMapping(value = "/category/{name}")
-  public ProductList getAllProductsCategories(@PathVariable String name) {
+  public ProductListResponse getAllProductsCategories(@PathVariable String name) {
     return dummyClient.getProductsOfCategory(name);
   }
 
   @PostMapping(value = "/add")
-  public Products newProduct(@RequestBody Products product) {
+  public ProductsResponse newProduct(@RequestBody ProductsResponse product) {
     return dummyClient.newProduct(product);
   }
 
   @PutMapping(value = "/{id}")
-  public Products updateProduct(
+  public ProductsResponse updateProduct(
     @RequestBody ProductUpdate productUpdate,
     @PathVariable Long id
   ) {

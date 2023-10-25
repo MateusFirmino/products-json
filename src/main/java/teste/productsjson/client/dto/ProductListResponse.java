@@ -1,4 +1,4 @@
-package teste.productsjson.client;
+package teste.productsjson.client.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +9,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductList {
-  private List<Products> products;
+public class ProductListResponse {
+  private List<ProductsResponse> products;
   private int total;
   private int skip;
   private int limit;

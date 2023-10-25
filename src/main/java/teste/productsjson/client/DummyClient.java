@@ -8,32 +8,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import teste.productsjson.client.dto.ProductListResponse;
+import teste.productsjson.client.dto.ProductUpdate;
+import teste.productsjson.client.dto.ProductsResponse;
+import teste.productsjson.client.dto.ProductsDelete;
 
 import java.util.List;
 
 @FeignClient(name = "products", url = "https://dummyjson.com")
 public interface DummyClient {
 
-  @GetMapping(value = "/products")
-  ProductList getAllProducts();
-
   @GetMapping(value = "products/{id}")
-  Products getProduct(@PathVariable Long id);
+  ProductsResponse getProduct(@PathVariable Long id);
 
   @GetMapping(value = "products/search")
-  ProductList searchProducts(@RequestParam(name = "q") String q);
+  ProductListResponse searchProducts(@RequestParam(name = "q") String q);
+
+  @GetMapping(value = "/products")
+  ProductListResponse searchCustomProducts(@RequestParam(value = "limit") String limit,
+                                           @RequestParam(value = "skip") String skip);
 
   @GetMapping(value = "/products/categories")
   List<String> getAllCategories();
 
   @GetMapping(value = "/products/category/{name}")
-  ProductList getProductsOfCategory(@PathVariable String name);
+  ProductListResponse getProductsOfCategory(@PathVariable String name);
 
   @PostMapping(value = "/products/add")
-  Products newProduct(@RequestBody Products product);
+  ProductsResponse newProduct(@RequestBody ProductsResponse product);
 
   @PutMapping(value = "/products/{id}")
-  Products updateProduct(@RequestBody ProductUpdate productUpdate,@PathVariable Long id);
+  ProductsResponse updateProduct(@RequestBody ProductUpdate productUpdate, @PathVariable Long id);
 
   @DeleteMapping(value = "products/{id}")
   ProductsDelete deleteProduct(@PathVariable Long id);
